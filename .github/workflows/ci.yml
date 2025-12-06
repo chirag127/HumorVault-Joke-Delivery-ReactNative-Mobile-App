@@ -1,139 +1,44 @@
-# CI/CD Pipeline for HumorFlow - React Native/Expo
-# Optimized for Zero-Defect, High-Velocity Deployment (2025 Standard)
-
-name: HumorFlow CI/CD
+name: CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches:
+      - main
   pull_request:
-    branches: [ main, develop ]
-
-permissions:
-  contents: read
-  pull-requests: write
 
 jobs:
-  lint_and_test:
-    name: Lint & Unit Test (JS/TS)
+  build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: . # Assuming root execution for Expo/RN projects
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Aligning with modern Expo requirements
-          cache: 'npm'
+          node-version: '20.x'
 
-      - name: Install Dependencies (using uv equivalent for Node speed)
-        # In a true Apex deployment, we'd ensure dependency resolution is atomic.
-        # For NPM/Yarn, this runs the install/ci command.
-        run: npm ci
+      - name: Install dependencies
+        run: npm install
 
-      - name: Verify Code Quality (Biome/Ruff equivalent for JS)
-        # Using a standard lint script defined in package.json
+      - name: Biome Check & Format
+        run: |
+          npm install --save-dev @biomejs/biome
+          npx biome check --apply . && npx biome format --write .
+
+      - name: Lint with ESLint
         run: npm run lint
 
-      - name: Run Unit & Component Tests (Vitest equivalent)
-        # Assuming a test script exists for Jest/Vitest
-        run: npm run test -- --ci
+      - name: Run tests
+        run: npm test
 
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v4
-        if: failure() || always()
-        with:
-          name: test-results-report
-          path: ./coverage/lcov.info
+      - name: Build app
+        run: npm run build
 
-  # --- Build & Static Analysis Phase ---
-  build_and_analyze:
-    name: Build Check (Android/iOS/Web)
-    needs: lint_and_test
-    runs-on: ubuntu-latest
-    outputs:
-      android_artifact: ${{ steps.build_android.outputs.download_url }}
-      ios_artifact: ${{ steps.build_ios.outputs.download_url }}
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js and Install Dependencies
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Build Android APK/AAB (Expo/EAS required for real build)
-        id: build_android
-        # Placeholder: In a real setup, this would use EAS build --platform android
-        run: echo "Skipping full binary build for CI validation only." && npm run build:android:ci || true
-        continue-on-error: true
-
-      - name: Build iOS Artifact (Placeholder)
-        id: build_ios
-        run: echo "Skipping iOS build validation for Linux runner." && npm run build:ios:ci || true
-        continue-on-error: true
-
-      - name: Generate Code Coverage Report (Codecov Upload)
-        # Upload to Codecov using the token
-        uses: codecov/codecov-action@v4
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/lcov.info
-          flags: build-check
-
-  # --- Deployment/Review Phase (Conditional on PR/Main) ---
-  pr_feedback:
-    name: PR Review Feedback
-    if: github.event_name == 'pull_request'
-    needs: build_and_analyze
-    runs-on: ubuntu-latest
-    steps:
-      - name: Post Status Comment
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const status = context.payload.pull_request.draft ? 'WIP' : 'Ready for Review';
-            const result = 
-              `### 🤖 Apex CI/CD Status Report\n` +
-              `**Status:** ${status}\n` +
-              `**Summary:** Linter and Unit Tests passed successfully. Build artifacts validation pending/simulated.\n` +
-              `*\n*Always verify artifact generation manually before merging to \`main\`.*\n` +
-              `[View Coverage Report Artifacts](https://github.com/chirag127/HumorFlow-AI-Powered-Joke-Generator-React-Native-App/actions/runs/${{ github.run_id }})\n`;
-            
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: result
-            });
-
-  release_staging:
-    name: Deploy to Staging (Main Branch Push)
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build_and_analyze
-    runs-on: ubuntu-latest
-    environment: Staging
-    steps:
-      - name: Download Artifacts (If required for EAS submission)
-        uses: actions/download-artifact@v4
-        with:
-          name: android-artifact
-          path: ./build/android
-
-      - name: Submit to EAS Staging Channel
-        # This step assumes EAS CLI is installed and configured via secrets
-        run: eas build --platform all --non-interactive --profile staging
-        env:
-          EAS_BUILD_PROFILE: staging
-          # Add relevant EAS secrets here
+          fail_ci_if_error: true
+          verbose: true
