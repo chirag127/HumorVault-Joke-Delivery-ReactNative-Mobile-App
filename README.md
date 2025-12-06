@@ -1,170 +1,131 @@
-# HumorFlow: AI-Powered Joke Generator React Native Application
+# HumorVault-Joke-Delivery-ReactNative-Mobile-App
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/chirag127/HumorFlow-AI-Powered-Joke-Generator-React-Native-App/ci.yml?style=flat-square)](https://github.com/chirag127/HumorFlow-AI-Powered-Joke-Generator-React-Native-App/actions/workflows/ci.yml)
-[![Code Coverage](https://img.shields.io/codecov/c/github/chirag127/HumorFlow-AI-Powered-Joke-Generator-React-Native-App?style=flat-square)](https://codecov.io/gh/chirag127/HumorFlow-AI-Powered-Joke-Generator-React-Native-App)
-[![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-blue?style=flat-square)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/chirag127/HumorFlow-AI-Powered-Joke-Generator-React-Native-App?style=flat-square)](https://github.com/chirag127/HumorFlow-AI-Powered-Joke-Generator-React-Native-App)
-[![Tech Stack: React Native](https://img.shields.io/badge/Tech%20Stack-React%20Native%20%7C%20Expo-367278?style=flat-square)]()
-[![Linter/Formatter: Biome](https://img.shields.io/badge/Linter%2FFormatter-Biome-6C69D1?style=flat-square)]()
+[![Build Status](https://img.shields.io/github/actions/workflow/status/chirag127/HumorVault-Joke-Delivery-ReactNative-Mobile-App/ci.yml?label=Build&style=flat-square)](https://github.com/chirag127/HumorVault-Joke-Delivery-ReactNative-Mobile-App/actions/workflows/ci.yml)
+[![Code Coverage](https://img.shields.io/codecov/c/github/chirag127/HumorVault-Joke-Delivery-ReactNative-Mobile-App?label=Coverage&style=flat-square)](https://codecov.io/gh/chirag127/HumorVault-Joke-Delivery-ReactNative-Mobile-App)
+[![License](https://img.shields.io/github/license/chirag127/HumorVault-Joke-Delivery-ReactNative-Mobile-App?style=flat-square)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/chirag127/HumorVault-Joke-Delivery-ReactNative-Mobile-App?style=flat-square)](https://github.com/chirag127/HumorVault-Joke-Delivery-ReactNative-Mobile-App)
+
+### 🌟 Star ⭐ this Repo
 
 --- 
 
-**HumorFlow is a cutting-edge mobile application developed using React Native and Expo that harnesses the power of generative AI to deliver an endless stream of fresh, contextually relevant jokes on demand.** This repository encapsulates the complete client-side logic for a seamless, cross-platform comedic experience.
+HumorVault is an engaging React Native mobile application designed for seamless delivery of curated jokes across various categories. Built with Expo, it provides a delightful user experience for instant entertainment and a quick laugh on the go, adhering to modern Cross-Platform standards.
 
-> ⭐ **Star this Repo** if you appreciate leveraging modern mobile development patterns with AI integration!
+## 🏛️ Architecture Overview
 
----
+The application utilizes a modern React Native structure driven by Expo Modules, focusing on modularity, performance, and maintainability.
 
-## 📐 Architecture Overview
-
-This project adheres to modern mobile development best practices, emphasizing separation of concerns using a variant of Feature-Sliced Design (FSD) adapted for React Native projects, ensuring high cohesion and low coupling between presentation, business logic, and data layers.
-
-mermaid
-graph TD
-    A[User Input/Interaction] --> B(Presentation Layer: UI Components);
-    B --> C{Business Logic/State Management: Hooks/Redux Toolkit};
-    C --> D[Data Layer: API Service (Axios/Fetch)];
-    D -- External Call --> E(AI Joke Generation API - e.g., Gemini/OpenAI);
-    E --> D;
-    D --> C;
-    C --> B;
-    subgraph Mobile Client (React Native + Expo)
-        A
-        B
-        C
-        D
-    end
+ascii
+HumorVault
+├── src/
+│   ├── components/     # Reusable UI Primitives (Atom/Molecule Level)
+│   ├── features/       # Feature Sliced Design (FSD) Modules (e.g., joke-listing, favorites)
+│   ├── navigation/     # React Navigation Configuration
+│   ├── state/          # State Management (e.g., Zustand/Redux Toolkit)
+│   └── services/
+│       └── api/
+│           └── joke-fetcher.ts # Data layer abstraction
+└── App.tsx
 
 
-## 📋 Table of Contents
+## 📜 Table of Contents
 
-1.  [HumorFlow: AI-Powered Joke Generator React Native Application](#humorflow-ai-powered-joke-generator-react-native-application)
-2.  [Architecture Overview](#-architecture-overview)
-3.  [Table of Contents](#-table-of-contents)
-4.  [Key Features](#-key-features)
-5.  [Technology Stack (Apex 2025 Standard)](#-technology-stack-apex-2025-standard)
-6.  [🤖 AI Agent Directives (The Blueprint)](#-ai-agent-directives-the-blueprint)
-7.  [Development & Setup](#-development--setup)
-8.  [Contributing Guidelines](#-contributing-guidelines)
-9.  [License](#-license)
+1.  [HumorVault-Joke-Delivery-ReactNative-Mobile-App](#humorvault-joke-delivery-reactnative-mobile-app)
+    *   [Architecture Overview](#-architecture-overview)
+    *   [Table of Contents](#-table-of-contents)
+    *   [Core Technology Stack](#-core-technology-stack)
+    *   [⚡ Installation & Setup](#-⚡-installation--setup)
+    *   [🤖 AI Agent Directives (APEX Standard)](#--ai-agent-directives-apex-standard)
+    *   [Development Principles](#-development-principles)
+    *   [Contributing](#-contributing)
+    *   [License](#-license)
 
-## ✨ Key Features
+## 🧩 Core Technology Stack
 
-*   **AI-Driven Comedy:** Generates unique jokes utilizing an external LLM API.
-*   **Cross-Platform Compatibility:** Built with Expo for seamless deployment across iOS and Android.
-*   **Modern UI/UX:** Utilizing high-performance rendering principles for snappy interaction.
-*   **State Management:** Robust state handling ensuring jokes load asynchronously without UI freezing.
-
-## 🛠️ Technology Stack (Apex 2025 Standard)
-
-| Category | Technology | Rationale |
+| Category | Technology | Rationale (2026 Standard) |
 | :--- | :--- | :--- |
-| **Core Framework** | React Native, Expo SDK 51+ | Maximum velocity and cross-platform reach. |
-| **Language** | TypeScript 6.x (Strict Mode) | Enforcing compile-time safety across the codebase. |
-| **Styling** | StyleSheet/NativeWind (Tailwind for RN) | Consistent, utility-first styling for rapid iteration. |
-| **Linting/Formatting** | Biome (Linter/Formatter) | Ultra-fast, unified tooling for code quality enforcement. |
-| **Testing** | Vitest (Unit/Component) & Playwright (E2E via EAS Build) | Comprehensive verification suite. |
-| **Architecture** | Feature-Sliced Design (FSD Adaptation) | Strict module boundaries for maintainability. |
+| **Framework** | React Native (Expo SDK 52+) | Maximum cross-platform reach with minimal native overhead. |
+| **Language** | TypeScript 6.x (Strict Mode) | Enforcing strong typing across the entire codebase for zero-defect delivery. |
+| **Styling** | StyleSheet / NativeWind (Tailwind for RN) | Utility-first styling for rapid, consistent UI development. |
+| **Linting/Formatting** | Biome (1.8+) | Unified, high-speed linting and formatting engine. |
+| **Testing** | Vitest & Playwright (E2E) | Fast unit testing via Vitest; robust E2E verification using Playwright for mobile interaction simulation. |
 
-## 🤖 AI Agent Directives (The Blueprint)
+## ⚡ Installation & Setup
 
-<details><summary><strong>View Apex Architectural Mandates for Future Agents</strong></summary>
+This project assumes Node.js (v20+) and Expo CLI are installed globally.
 
-# SYSTEM: APEX TECHNICAL AUTHORITY & ELITE ARCHITECT (DECEMBER 2025 EDITION)
-
-## 1. IDENTITY & PRIME DIRECTIVE
-**Role:** You are a Senior Principal Software Architect and Master Technical Copywriter with **40+ years of elite industry experience**. You operate with absolute precision, enforcing FAANG-level standards and the wisdom of "Managing the Unmanageable."
-**Context:** Current Date is **December 2025**. You are building for the 2026 standard.
-**Output Standard:** Deliver **EXECUTION-ONLY** results. No plans, no "reporting"—only executed code, updated docs, and applied fixes.
-**Philosophy:** "Zero-Defect, High-Velocity, Future-Proof."
-
----
-
-## 2. INPUT PROCESSING & COGNITION
-*   **SPEECH-TO-TEXT INTERPRETATION PROTOCOL:**
-    *   **Context:** User inputs may contain phonetic errors (homophones, typos).
-    *   **Semantic Correction:** **STRICTLY FORBIDDEN** from executing literal typos. You must **INFER** technical intent based on the project context.
-    *   **Logic Anchor:** Treat the `README.md` as the **Single Source of Truth (SSOT)**.
-*   **MANDATORY MCP INSTRUMENTATION:**
-    *   **No Guessing:** Do not hallucinate APIs. Use `linkup`/`brave` to search for **December 2025 Industry Standards**.
-    *   **Validation:** Use `docfork` to verify *every* external API signature (specifically the AI provider's endpoint).
-    *   **Reasoning:** Engage `clear-thought-two` to architect complex flows *before* writing code.
-
----
-
-## 3. CONTEXT-AWARE APEX TECH STACKS (LATE 2025 STANDARDS)
-**Directives:** Detect the project type and apply the corresponding **Apex Toolchain**.
-
-*   **PRIMARY SCENARIO: WEB / APP / GUI (Modern Frontend/Mobile)**
-    *   **Stack:** This project, `HumorFlow-AI-Powered-Joke-Generator-React-Native-App`, mandates **TypeScript 6.x (Strict)**, **Vite 7** (for tooling compatibility/e.g., Babel replacements), **TailwindCSS v4 (via NativeWind)**, and **EAS Build (Expo)**.
-    *   **Lint/Test:** **Biome** (Speed Linter/Formatter) + **Vitest** (Unit) + **Playwright** (E2E).
-    *   **Architecture:** Feature-Sliced Design (FSD) adapted for React Native Modules.
-    *   **AI Integration:** All AI service wrappers MUST implement exponential backoff and request throttling logic adhering to the provider's documented limits.
-
-## 4. ARCHITECTURAL PRINCIPLES ENFORCEMENT
-
-*   **SOLID:** Paramount. Specifically, the `ApiService` module must adhere to the **Single Responsibility Principle** (SRP) by only handling transport, leaving parsing and business validation to the Service/Feature layer.
-*   **DRY:** Logic for loading states, error toasts, and retry mechanisms must be centralized in reusable hooks or context providers.
-*   **YAGNI:** Avoid implementing complex features (e.g., user accounts, persistent storage) unless directly required for joke fetching/display functionality.
-
-## 5. VERIFICATION & EXECUTION COMMANDS
-
-*   **Setup & Bootstrap:**
+1.  **Clone the Repository:**
     bash
-    git clone https://github.com/chirag127/HumorFlow-AI-Powered-Joke-Generator-React-Native-App
-    cd HumorFlow-AI-Powered-Joke-Generator-React-Native-App
-    npx create-expo-app . --template blank-typescript # (If structure needed re-initialization)
-    npm install # (or uv/yarn equivalent based on package manager)
+    git clone https://github.com/chirag127/HumorVault-Joke-Delivery-ReactNative-Mobile-App.git
+    cd HumorVault-Joke-Delivery-ReactNative-Mobile-App
     
-*   **Quality Gates:**
-    *   `npm run lint`: Execute Biome check.
-    *   `npm run format`: Execute Biome format.
-    *   `npm run test:unit`: Run Vitest suite.
-    *   `npm run build:dev`: Start development server via Expo.
+
+2.  **Environment & Dependency Management (Using `uv` approach philosophy via npm/yarn):**
+    bash
+    # Install project dependencies
+    npm install
+    # Alternatively, using yarn:
+    # yarn install
+    
+
+3.  **Start Development Server:**
+    bash
+    npx expo start
+    
+
+### Scripts
+
+| Command | Description |
+| :--- | :--- |
+| `npm run lint` | Run Biome check across all TS/TSX files. |
+| `npm run format` | Automatically format code using Biome. |
+| `npm run test` | Execute unit tests via Vitest. |
+| `npm run test:e2e` | Run End-to-End Playwright scenarios. |
+| `npx expo prebuild` | Generate native Android/iOS projects (if required for native modules). |
+
+## 🤖 AI Agent Directives (APEX Standard)
+
+<details>
+<summary>Click to reveal Apex System Directives for Automated Maintenance (AGENTS.md Alignment)</summary>
+
+# AGENTS.md: Automated Maintenance & Compliance Protocol
+
+**System Context:** This repository adheres to FAANG-level standards for mobile application development, prioritizing performance, strict typing, and automated verification.
+
+## 1. Architectural Alignment
+*   **Pattern:** Strict adherence to **Feature-Sliced Design (FSD)** principles within the `/features` directory. Components must be strictly decoupled.
+*   **Typing:** All TypeScript files **MUST** use `"strict": true` in `tsconfig.json`. No implicit `any` allowed.
+*   **DRY Principle:** All presentation logic (styles, non-reusable components) must be collocated within the feature slice it serves.
+
+## 2. Toolchain Enforcement (The 2026 Mobile Stack)
+*   **Linter/Formatter:** **Biome** is the SSOT for code quality. Any failing lint check automatically fails CI checks.
+*   **Dependency Management:** Use `npm` or `yarn` workspaces if project scales beyond a single codebase; otherwise, maintain a flat dependency structure managed by the package manager.
+*   **Testing Mandate:** 
+    *   Unit tests (`npm run test`) must achieve **>85% line coverage** on all business logic (services, state reducers).
+    *   E2E testing (`npm run test:e2e`) must cover the critical paths: App Launch -> Category Selection -> Joke Display -> Favorite Action.
+
+## 3. Security Posture (Mobile Focus)
+*   **Credential Storage:** Never hardcode API keys directly in source code. Utilize Expo SecureStore or OS Keychains via appropriate wrappers.
+*   **Data Ingress Validation:** All data received from the joke API **MUST** be validated against TypeScript interfaces immediately upon receipt from the network layer.
+
+## 4. Verification Commands (For Automated Agents)
+*   **Quality Gate Check:** `npm run lint && npm run test`
+*   **Startup Test:** `npx expo start --no-tunnel` (to ensure local server initializes without network dependency interference)
 
 </details>
 
-## 🚀 Development & Setup
+## Development Principles
 
-Follow these steps to establish the development environment and run the application locally.
+This project is maintained based on established Architectural Wisdom:
 
-### Prerequisites
+*   **SOLID:** Core services and data providers must demonstrate Single Responsibility and Dependency Inversion.
+*   **DRY (Don't Repeat Yourself):** Utilize generic components heavily.
+*   **YAGNI (You Ain't Gonna Need It):** Avoid premature abstraction or over-engineering for features not yet defined.
 
-1.  Node.js (LTS or higher)
-2.  npm/Yarn/pnpm
-3.  Expo Go App installed on your mobile device or an active emulator/simulator.
+## Contributing
 
-### Installation Steps
+We welcome contributions that improve performance, stability, or user experience. Please adhere to the contribution guidelines outlined in `.github/CONTRIBUTING.md`.
 
-bash
-git clone https://github.com/chirag127/HumorFlow-AI-Powered-Joke-Generator-React-Native-App.git
-cd HumorFlow-AI-Powered-Joke-Generator-React-Native-App
-npm install
-# Set environment variables (e.g., .env file) for your AI_API_KEY
+## License
 
-
-### Execution Scripts
-
-| Script | Command | Description |
-| :--- | :--- | :--- |
-| **Start Dev** | `npm run start` | Launches the Expo development server. |
-| **Lint Check** | `npm run lint` | Runs Biome against all source files. |
-| **Format Fix** | `npm run format` | Auto-formats files using Biome. |
-| **Unit Tests** | `npm run test:unit` | Executes Vitest unit tests. |
-| **E2E Test** | `npm run test:e2e` | Runs Playwright end-to-end verification. |
-
-## 🤝 Contributing Guidelines
-
-Please refer to the comprehensive contribution guide for standards on code quality, pull request structure, and issue reporting.
-
-[CONTRIBUTING.md](./.github/CONTRIBUTING.md)
-
-## 🛡️ Security
-
-For vulnerability reports or security concerns, please consult our dedicated security policy.
-
-[SECURITY.md](./.github/SECURITY.md)
-
-## 📜 License
-
-This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International License**. See the [LICENSE](./LICENSE) file for details.
+This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International License**. See the [LICENSE](LICENSE) file for details.
